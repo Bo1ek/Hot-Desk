@@ -1,14 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SoftwareMind.Infrastructure.Entities;
 
-public class User : IdentityUser 
+public class User : IdentityUser
 {
     [PersonalData]
+    [Required]
     [Column(TypeName = "text")]
-    public required string FirstName { get; set; }
+    public string FirstName { get; set; }
     [PersonalData]
+    [Required]
     [Column(TypeName = "text")]
-    public required string LastName { get; set; }
+    public string LastName { get; set; }
 }
