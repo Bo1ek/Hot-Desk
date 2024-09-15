@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using SoftwareMind.Infrastructure.Data;
 using SoftwareMind.Infrastructure.Entities;
+using SoftwareMind.Infrastructure.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddAuthorizationBuilder();
 builder.Services.AddAuthentication();
 builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {

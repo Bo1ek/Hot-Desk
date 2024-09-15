@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SoftwareMind.Infrastructure.DTOs;
 using SoftwareMind.Infrastructure.Entities;
 using SoftwareMind.Infrastructure.Repositories;
 
@@ -19,10 +20,10 @@ namespace SolutionMind.WebAPI.Controllers
         /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<Location>> CreateLocation(Location location)
+        public async Task<ActionResult<Location>> CreateLocation(LocationDto locationDto)
         {
-            await _locationRepository.CreateAsync(location);
-            return Ok(location);
+            await _locationRepository.CreateAsync(locationDto);
+            return Ok(locationDto);
         }
 
         /// <summary>
@@ -30,10 +31,10 @@ namespace SolutionMind.WebAPI.Controllers
         /// </summary>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Location>> UpdateLocation(Location location)
+        public async Task<ActionResult<Location>> UpdateLocation(LocationDto locationDto)
         {
-            await _locationRepository.UpdateAsync(location);
-            return Ok(location);
+            await _locationRepository.UpdateAsync(locationDto);
+            return Ok(locationDto);
         }
 
         /// <summary>

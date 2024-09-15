@@ -1,11 +1,12 @@
 ﻿using SoftwareMind.Infrastructure.Data;
+using SoftwareMind.Infrastructure.DTOs;
 using SoftwareMind.Infrastructure.Entities;
 
 namespace SoftwareMind.Infrastructure.Repositories;
 public interface ILocationRepository
 {
-    Task CreateAsync(Location location);
-    Task UpdateAsync(Location location);
+    Task CreateAsync(LocationDto locationDto);
+    Task UpdateAsync(LocationDto locationDto);
     Task RemoveAsync(int locationId);
 }
 
@@ -16,20 +17,19 @@ public class LocationRepository : ILocationRepository
     {
         _context = context;
     }
-    public async Task CreateAsync(Location location)
+    public async Task CreateAsync(LocationDto locationDto)
     {
         var locationEntity = new Location
         {
-            Id = location.Id,
-            City = location.City,
-            Desks = location.Desks
+            Id = locationDto.Id,
+            City = locationDto.City
         };
         await _context.Locations.AddAsync(locationEntity);
         await _context.SaveChangesAsync();
     }
-    public async Task UpdateAsync(Location location)
+    public async Task UpdateAsync(LocationDto locationDto)
     {
-        _context.Update(location);
+        _context.Update(locationDto);
         await _context.SaveChangesAsync();
     }
     public async Task RemoveAsync(int locationId)
