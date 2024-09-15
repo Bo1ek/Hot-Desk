@@ -1,0 +1,6 @@
+@SolutionMind.WebAPI_HostAddress = http://localhost:5078
+
+GET {{SolutionMind.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
