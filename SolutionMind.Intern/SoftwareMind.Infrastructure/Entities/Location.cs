@@ -3,6 +3,5 @@
 public class Location
 {
     public int Id { get; set; }
-    public required string City { get; set; }
-    public List<Desk> Desks { get; set; } = [];
+    public string City { get; set; }
 }

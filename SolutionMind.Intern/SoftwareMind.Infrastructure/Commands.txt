@@ -1,0 +1,2 @@
+﻿dotnet ef migrations add "Name -s ..\SolutionMind.WebAPI\SolutionMind.WebAPI.csproj
+dotnet ef database update -s ..\SolutionMind.WebAPI\SolutionMind.WebAPI.csproj

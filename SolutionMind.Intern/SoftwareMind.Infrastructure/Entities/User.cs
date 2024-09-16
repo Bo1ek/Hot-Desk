@@ -9,9 +9,9 @@ public class User : IdentityUser
     [PersonalData]
     [Required]
     [Column(TypeName = "text")]
-    public string FirstName { get; set; }
+    public string FirstName { get; set; } = string.Empty;
     [PersonalData]
     [Required]
     [Column(TypeName = "text")]
-    public string LastName { get; set; }
+    public string LastName { get; set; } = string.Empty;
 }
