@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using SoftwareMind.Infrastructure.DTOs;
 using SoftwareMind.Infrastructure.Entities;
 using SoftwareMind.Infrastructure.Repositories;
+using SoftwareMind.Infrastructure.Validator;
 
 namespace SolutionMind.WebAPI.Controllers
 {
@@ -19,9 +21,16 @@ namespace SolutionMind.WebAPI.Controllers
         ///  Create a new location
         /// </summary>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Location>> CreateLocation(CreateLocationDto createLocationDto)
         {
+            var validator = new CreateLocationValidator();
+            var validationResult = validator.Validate(createLocationDto);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
             await _locationRepository.CreateAsync(createLocationDto);
             return Ok(createLocationDto);
         }
@@ -33,6 +42,12 @@ namespace SolutionMind.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<LocationDto>> UpdateLocation(LocationDto locationDto)
         {
+            var validator = new UpdateLocationValidator();
+            var validationResult = validator.Validate(locationDto);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
             await _locationRepository.UpdateAsync(locationDto);
             return Ok(locationDto);
         }
