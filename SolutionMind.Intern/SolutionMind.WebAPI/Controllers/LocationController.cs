@@ -20,10 +20,10 @@ namespace SolutionMind.WebAPI.Controllers
         /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<Location>> CreateLocation(LocationDto locationDto)
+        public async Task<ActionResult<Location>> CreateLocation(CreateLocationDto createLocationDto)
         {
-            await _locationRepository.CreateAsync(locationDto);
-            return Ok(locationDto);
+            await _locationRepository.CreateAsync(createLocationDto);
+            return Ok(createLocationDto);
         }
 
         /// <summary>
@@ -31,14 +31,14 @@ namespace SolutionMind.WebAPI.Controllers
         /// </summary>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Location>> UpdateLocation(LocationDto locationDto)
+        public async Task<ActionResult<LocationDto>> UpdateLocation(LocationDto locationDto)
         {
             await _locationRepository.UpdateAsync(locationDto);
             return Ok(locationDto);
         }
 
         /// <summary>
-        /// 
+        /// Delete a location by id
         /// </summary>
         [HttpDelete("{locationId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
