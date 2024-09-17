@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SoftwareMind.Infrastructure.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
 using SoftwareMind.Infrastructure.Repositories;
 using SoftwareMind.Infrastructure.DTOs;
-using Serilog;
 using SoftwareMind.Infrastructure.Exceptions;
+using SoftwareMind.Infrastructure.Validator;
+using SoftwareMind.Infrastructure.Entities;
 
 namespace SolutionMind.WebAPI.Controllers;
 
@@ -42,7 +41,7 @@ public class DeskController : Controller
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CreateDeskDto>> CreateDesk(CreateDeskDto createDeskDto)
     {
-        if (_locationRepository.CheckIfExists(createDeskDto.LocationId))
+        if (_locationRepository.Exists(createDeskDto.LocationId))
         {
             await _deskRepository.CreateAsync(createDeskDto);
             return Ok(createDeskDto);
@@ -67,15 +66,37 @@ public class DeskController : Controller
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> RemoveDesk(int deskId)
     {
-        if (!_deskRepository.CheckIfReserved(deskId))
+        if (_deskRepository.IsAvailable(deskId) && _deskRepository.Exists(deskId))
         {
             await _deskRepository.RemoveAsync(deskId);
             return NoContent();
         }
         return BadRequest();
     }
-    //public async Task<ActionResult> ReserveDesk(int deskId)
-    //{
 
-    //}
+    /// <summary>
+    /// Update a Desks status to unavailable
+    /// </summary>
+    /// <returns> 200StatusCode </returns>
+    /// <remarks>
+    /// Sample request: 
+    /// 
+    ///     Put/api/location
+    ///     {
+    ///         "id" : 1,
+    ///         "city": "Warszawa"
+    ///     }
+    ///         
+    /// 
+    /// </remarks>
+    /// <response code ="201">Returns the updated Location with it's Id. </response>
+    /// <response code ="400">Returns errror message from Validator. </response>
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Desk>> MakeUnavailable(int deskId, CancellationToken cancellationToken = default)
+    {
+        await _deskRepository.MakeUnavailable(deskId);
+        return Ok();
+    }
 }

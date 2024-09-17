@@ -10,8 +10,9 @@ public interface IDeskRepository
     Task CreateAsync(CreateDeskDto createDeskDto, CancellationToken cancellationToken = default);
     Task UpdateAsync(LocationDto locationDto, CancellationToken cancellationToken = default);
     Task RemoveAsync(int locationId, CancellationToken cancellationToken = default);
-    bool CheckIfReserved(int deskId);
-    bool CheckIfExists(int deskId);
+    bool IsAvailable(int deskId);
+    bool Exists(int deskId);
+    Task<Desk> MakeUnavailable(int deskId, CancellationToken cancellationToken = default);
 }
 public class DeskRepository : IDeskRepository
 {
@@ -46,13 +47,27 @@ public class DeskRepository : IDeskRepository
     {
         throw new NotImplementedException();
     }
-    public bool CheckIfReserved(int deskId)
+    public bool IsAvailable(int deskId)
     {
-        return _context.Desks.Any(d => d.Id == deskId && d.IsAvailable == false);
+        return _context.Desks.Any(d => d.IsAvailable == false && d.Id == deskId);
     }
-    public bool CheckIfExists(int deskId)
+    public bool Exists(int deskId)
     {
         return _context.Desks.Any(d => d.Id == deskId);
     }
-
+    public async Task<Desk> MakeUnavailable(int deskId, CancellationToken cancellationToken = default)
+    {
+        var desk = await _context.Desks.FindAsync(deskId, cancellationToken);
+        if (desk == null)
+        {
+            throw new DeskNotFoundException(deskId);
+        }
+        else if (Exists(deskId) && IsAvailable(deskId))
+        {
+            throw new DeskAlreadyReservedException(deskId);
+        }
+        desk.IsAvailable = false;
+        await _context.SaveChangesAsync(cancellationToken);
+        return desk;
+    }
 }

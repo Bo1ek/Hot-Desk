@@ -9,6 +9,7 @@ public interface ILocationRepository
     Task CreateAsync(CreateLocationDto createLocationDto, CancellationToken cancellationToken = default);
     Task UpdateAsync(LocationDto locationDto, CancellationToken cancellationToken = default);
     Task RemoveAsync(int locationId, CancellationToken cancellationToken = default);
+    bool Exists(int locationId);
 }
 
 public class LocationRepository : ILocationRepository
@@ -47,6 +48,10 @@ public class LocationRepository : ILocationRepository
         _context.Remove(locationToRemove);
         await _context.SaveChangesAsync(cancellationToken);
 
+    }
+    public bool Exists(int locationId)
+    {
+        return  _context.Locations.Any(l => l.Id == locationId);
     }
 }
 
