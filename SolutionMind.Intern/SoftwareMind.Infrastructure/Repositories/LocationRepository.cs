@@ -1,6 +1,7 @@
 ﻿using SoftwareMind.Infrastructure.Data;
 using SoftwareMind.Infrastructure.DTOs;
 using SoftwareMind.Infrastructure.Entities;
+using SoftwareMind.Infrastructure.Exceptions;
 
 namespace SoftwareMind.Infrastructure.Repositories;
 public interface ILocationRepository
@@ -39,11 +40,13 @@ public class LocationRepository : ILocationRepository
     public async Task RemoveAsync(int locationId, CancellationToken cancellationToken = default)
     {
         var locationToRemove = await _context.Locations.FindAsync(locationId, cancellationToken);
-        if (locationToRemove != null) 
+        if (locationToRemove == null) 
         {
-            _context.Remove(locationToRemove);
-            await _context.SaveChangesAsync(cancellationToken);
+            throw new LocationNotFoundException(locationId);
         }
+        _context.Remove(locationToRemove);
+        await _context.SaveChangesAsync(cancellationToken);
+
     }
 }
 
