@@ -1,14 +1,28 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using SoftwareMind.Infrastructure.Data;
 using SoftwareMind.Infrastructure.Entities;
 using SoftwareMind.Infrastructure.Repositories;
+using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(o =>
+{
+    o.SwaggerDoc("v1",
+        new OpenApiInfo
+        {
+            Title = "SoftwareMind.Intern",
+            Description = "An intuitive system to automate the reservation of desks in offices through an easy-to-use online booking system.",
+            Version = "v1",
+        });
+    var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var filePath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
+    o.IncludeXmlComments(filePath);
+});
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SoftwareMind"));
