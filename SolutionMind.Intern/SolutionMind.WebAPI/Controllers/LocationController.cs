@@ -8,7 +8,7 @@ using SoftwareMind.Infrastructure.Validator;
 
 namespace SolutionMind.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class LocationController : Controller
     {
@@ -40,12 +40,12 @@ namespace SolutionMind.WebAPI.Controllers
         {
             var validator = new CreateLocationValidator();
             var validationResult = validator.Validate(createLocationDto);
-            if (!validationResult.IsValid)
+            if (validationResult.IsValid)
             {
-                return BadRequest(validationResult.Errors);
+                await _locationRepository.CreateAsync(createLocationDto);
+                return Ok(createLocationDto);
             }
-            await _locationRepository.CreateAsync(createLocationDto);
-            return Ok(createLocationDto);
+            return BadRequest(validationResult.Errors);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace SolutionMind.WebAPI.Controllers
         /// </remarks>
         /// <response code ="204">Returns No Content message.  </response>
         /// <response code ="404">Returns message "Location with id {id} not found." </response>
-        [HttpDelete("{locationId}")]
+        [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> RemoveLocation(int locationId)

@@ -5,7 +5,7 @@ using SoftwareMind.Infrastructure.Entities;
 
 namespace SolutionMind.WebAPI.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/[controller]/[action]")]
 [ApiController]
 public class DeskController : Controller
 {
@@ -59,7 +59,7 @@ public class DeskController : Controller
     /// </remarks>
     /// <response code ="204">Returns No Content message.  </response>
     /// <response code ="404">Returns BadRequest response. " </response>
-    [HttpDelete("{deskId}")]
+    [HttpDelete]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> RemoveDesk(int deskId)
@@ -98,14 +98,20 @@ public class DeskController : Controller
         return Ok();
     }
 
-    [HttpGet("available")]
+    [HttpGet]
     public async Task<ActionResult<List<Desk>>> GetAllAvailableDesks()
     {
         return await _deskRepository.getAllAvailableDesks();
     }
-    [HttpGet("unavailable")]
+    [HttpGet]
     public async Task<ActionResult<List<Desk>>> GetAllUnavailableDesks()
     {
         return await _deskRepository.getAllUnavailableDesks();
     }
+    [HttpGet]
+    public async Task<ActionResult<List<Desk>>> GetDesksByLocation(int locationId)
+    {
+        return await _deskRepository.getDesksByLocation(locationId);
+    }
+
 }

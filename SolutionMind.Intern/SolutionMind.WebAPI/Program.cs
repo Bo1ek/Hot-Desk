@@ -31,6 +31,7 @@ builder.Services.AddAuthorizationBuilder();
 builder.Services.AddAuthentication();
 builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<IDeskRepository, DeskRepository>();
 var app = builder.Build();

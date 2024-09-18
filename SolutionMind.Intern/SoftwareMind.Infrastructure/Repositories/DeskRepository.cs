@@ -15,6 +15,7 @@ public interface IDeskRepository
     Task<Desk> MakeUnavailable(int deskId, CancellationToken cancellationToken = default);
     Task<List<Desk>> getAllAvailableDesks();
     Task<List<Desk>> getAllUnavailableDesks();
+    Task<List<Desk>> getDesksByLocation(int locationId);
 
 }
 public class DeskRepository : IDeskRepository
@@ -52,7 +53,7 @@ public class DeskRepository : IDeskRepository
     }
     public bool IsAvailable(int deskId)
     {
-        return _context.Desks.Any(d => d.IsAvailable == false && d.Id == deskId);
+        return _context.Desks.Any(d => d.IsAvailable == true && d.Id == deskId);
     }
     public bool Exists(int deskId)
     {
@@ -65,7 +66,7 @@ public class DeskRepository : IDeskRepository
         {
             throw new DeskNotFoundException(deskId);
         }
-        else if (Exists(deskId) && IsAvailable(deskId))
+        else if (Exists(deskId) && !IsAvailable(deskId))
         {
             throw new DeskAlreadyReservedException(deskId);
         }
@@ -80,5 +81,9 @@ public class DeskRepository : IDeskRepository
     public async Task<List<Desk>> getAllUnavailableDesks()
     {
         return _context.Desks.Where(d => d.IsAvailable == false).ToList();
+    }
+    public async Task<List<Desk>> getDesksByLocation(int locationId)
+    {
+        return _context.Desks.Where(d => d.Location.Id == locationId ).ToList();
     }
 }
