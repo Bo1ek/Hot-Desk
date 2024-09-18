@@ -5,9 +5,9 @@ using SoftwareMind.Infrastructure.Helpers;
 
 namespace SoftwareMind.Infrastructure.Validator;
 
-public class DateValidator : AbstractValidator<CreateReservationForMultipleDaysDto> 
+public class ReservationDateValidator : AbstractValidator<CreateReservationForMultipleDaysDto> 
 {
-    public DateValidator()
+    public ReservationDateValidator()
     {
         RuleFor(d => d.StartDate)
             .GreaterThanOrEqualTo((DateTimeHelper.SetTimeToStartOfDay(DateTime.Now)))

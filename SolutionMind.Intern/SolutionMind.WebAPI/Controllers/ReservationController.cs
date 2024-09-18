@@ -23,7 +23,7 @@ namespace SolutionMind.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Reservation>> MakeReservationForMultipleDays(CreateReservationForMultipleDaysDto createReservationDto)
         {
-            var validation = new DateValidator();
+            var validation = new ReservationDateValidator();
             var validationResult = validation.Validate(createReservationDto);
             if (validationResult.IsValid)
             {
@@ -41,5 +41,14 @@ namespace SolutionMind.WebAPI.Controllers
             await _reservationRepository.BookDeskForOneDay(deskId, userId, reservationDay);
             return Ok();
         }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task <ActionResult<Reservation>> UpdateDesk(int deskId, string userId, int reservationId)
+        {
+            await _reservationRepository.UpdateDesk(deskId, userId, reservationId);
+            return Ok();
+        }
+
     }
 }

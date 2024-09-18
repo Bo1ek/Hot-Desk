@@ -9,6 +9,9 @@ public interface IReservationRepository
     Task BookDeskForMultipleDays(CreateReservationForMultipleDaysDto createReservationDto, CancellationToken cancellationToken = default);
     bool IsReserved(int deskId, DateTime startDate, DateTime endDate);
     Task BookDeskForOneDay(int deskId, string userId, DateTime reservationDay, CancellationToken cancellationToken = default);
+    bool Exists(int reservationId);
+    bool IsReservedByUser(string userId, int reservationId);
+    Task<Reservation> UpdateDesk(int deskId, string userId, int reservationId, CancellationToken cancellationToken = default);
 }
 
 public class ReservationRepository : IReservationRepository
@@ -59,6 +62,35 @@ public class ReservationRepository : IReservationRepository
             ((s.StartDate <= startDate && s.EndDate >= startDate) ||
              (s.StartDate <= endDate && s.EndDate >= endDate) ||
              (s.StartDate >= startDate && s.EndDate <= endDate)));
+    }
+    public bool Exists(int reservationId)
+    {
+        return _context.Reservations.Any(r => r.Id == reservationId);
+    }
+    public bool IsReservedByUser(string userId, int reservationId)
+    {
+        return _context.Reservations.Any(r => r.UserId == userId && r.Id == reservationId);
+    }
+    public async Task<Reservation> getReservationById(int reservationId)
+    {
+        return await _context.Reservations.FindAsync(reservationId);
+    }
+
+
+    public async Task<Reservation> UpdateDesk(int deskId,string userId, int reservationId, CancellationToken cancellationToken = default)
+    {
+        if (_deskRepository.Exists(deskId) && IsReservedByUser(userId, reservationId))
+        {
+            var reservation = await getReservationById(reservationId);
+            if (reservation.StartDate > DateTime.UtcNow.AddHours(24))
+            {
+                reservation.DeskId = deskId;
+                await _context.SaveChangesAsync(cancellationToken);
+                return reservation;
+            }
+            throw new Exception("You cannot update a reservation that is less than 24 hours away"); 
+        }
+        throw new Exception("Desk is reserved or does not exist"); 
     }
 
 }
