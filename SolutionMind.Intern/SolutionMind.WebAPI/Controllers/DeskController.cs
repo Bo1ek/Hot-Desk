@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SoftwareMind.Infrastructure.Repositories;
 using SoftwareMind.Infrastructure.DTOs;
-using SoftwareMind.Infrastructure.Exceptions;
-using SoftwareMind.Infrastructure.Validator;
 using SoftwareMind.Infrastructure.Entities;
 
 namespace SolutionMind.WebAPI.Controllers;
@@ -98,5 +96,16 @@ public class DeskController : Controller
     {
         await _deskRepository.MakeUnavailable(deskId);
         return Ok();
+    }
+
+    [HttpGet("available")]
+    public async Task<ActionResult<List<Desk>>> GetAllAvailableDesks()
+    {
+        return await _deskRepository.getAllAvailableDesks();
+    }
+    [HttpGet("unavailable")]
+    public async Task<ActionResult<List<Desk>>> GetAllUnavailableDesks()
+    {
+        return await _deskRepository.getAllUnavailableDesks();
     }
 }

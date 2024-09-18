@@ -13,6 +13,9 @@ public interface IDeskRepository
     bool IsAvailable(int deskId);
     bool Exists(int deskId);
     Task<Desk> MakeUnavailable(int deskId, CancellationToken cancellationToken = default);
+    Task<List<Desk>> getAllAvailableDesks();
+    Task<List<Desk>> getAllUnavailableDesks();
+
 }
 public class DeskRepository : IDeskRepository
 {
@@ -69,5 +72,13 @@ public class DeskRepository : IDeskRepository
         desk.IsAvailable = false;
         await _context.SaveChangesAsync(cancellationToken);
         return desk;
+    }
+    public async Task<List<Desk>> getAllAvailableDesks()
+    {
+        return _context.Desks.Where(d => d.IsAvailable == true).ToList();
+    }
+    public async Task<List<Desk>> getAllUnavailableDesks()
+    {
+        return _context.Desks.Where(d => d.IsAvailable == false).ToList();
     }
 }
