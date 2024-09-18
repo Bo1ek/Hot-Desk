@@ -12,6 +12,7 @@ public interface IReservationRepository
     bool Exists(int reservationId);
     bool IsReservedByUser(string userId, int reservationId);
     Task<Reservation> UpdateDesk(int deskId, string userId, int reservationId, CancellationToken cancellationToken = default);
+    Task<List<Reservation>> GetListOfReservations();
 }
 
 public class ReservationRepository : IReservationRepository
@@ -37,7 +38,7 @@ public class ReservationRepository : IReservationRepository
             await _context.Reservations.AddAsync(reservation, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
         }
-        else throw new Exception("Desk is reserved or does not exist");
+        else throw new Exception("Desk is reserved or does not exist"); // Add new Exception
     }
     public async Task BookDeskForOneDay(int deskId, string userId, DateTime reservationDay, CancellationToken cancellationToken = default)
     {
@@ -53,7 +54,7 @@ public class ReservationRepository : IReservationRepository
             await _context.Reservations.AddAsync(reservation, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
         }
-        else throw new Exception("Desk is reserved or does not exist");
+        else throw new Exception("Desk is reserved or does not exist"); // Add new Exception
     }
     public bool IsReserved(int deskId, DateTime startDate, DateTime endDate)
     {
@@ -71,26 +72,31 @@ public class ReservationRepository : IReservationRepository
     {
         return _context.Reservations.Any(r => r.UserId == userId && r.Id == reservationId);
     }
-    public async Task<Reservation> getReservationById(int reservationId)
+    public async Task<Reservation> GetReservationById(int reservationId)
     {
         return await _context.Reservations.FindAsync(reservationId);
     }
-
 
     public async Task<Reservation> UpdateDesk(int deskId,string userId, int reservationId, CancellationToken cancellationToken = default)
     {
         if (_deskRepository.Exists(deskId) && IsReservedByUser(userId, reservationId))
         {
-            var reservation = await getReservationById(reservationId);
+            var reservation = await GetReservationById(reservationId);
             if (reservation.StartDate > DateTime.UtcNow.AddHours(24))
             {
                 reservation.DeskId = deskId;
                 await _context.SaveChangesAsync(cancellationToken);
                 return reservation;
-            }
-            throw new Exception("You cannot update a reservation that is less than 24 hours away"); 
+            } 
+            throw new Exception("You cannot update a reservation that is less than 24 hours away"); // Add new Exception
         }
-        throw new Exception("Desk is reserved or does not exist"); 
+        throw new Exception("Desk is reserved or does not exist");  // Add new Exception
     }
+
+    public async Task<List<Reservation>> GetListOfReservations()
+    {
+        return _context.Reservations.ToList();
+    }
+
 
 }

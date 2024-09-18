@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SoftwareMind.Infrastructure.DTOs;
 using SoftwareMind.Infrastructure.Entities;
@@ -50,5 +50,12 @@ namespace SolutionMind.WebAPI.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<Reservation>>> GetListOfReservations()
+        {
+            return await _reservationRepository.GetListOfReservations();
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using SoftwareMind.Infrastructure.DTOs;
-using SoftwareMind.Infrastructure.Entities;
 using SoftwareMind.Infrastructure.Helpers;
 
 namespace SoftwareMind.Infrastructure.Validator;

@@ -33,7 +33,7 @@ public class LocationRepository : ILocationRepository
         var location = await _context.Locations.FindAsync(locationDto.Id, cancellationToken);
         if (location == null)
         {
-            throw new Exception("Location not found");
+            throw new Exception("Location not found"); // Add new Exception
         }
         location.City = locationDto.City;
         await _context.SaveChangesAsync(cancellationToken);
