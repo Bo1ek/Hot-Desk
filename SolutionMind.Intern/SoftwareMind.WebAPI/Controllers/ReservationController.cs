@@ -4,7 +4,7 @@ using SoftwareMind.Application.Common.Models;
 using SoftwareMind.Application.Common.Validator;
 using SoftwareMind.Infrastructure.Repositories;
 
-namespace SolutionMind.WebAPI.Controllers
+namespace SoftwareMind.WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -20,13 +20,13 @@ namespace SolutionMind.WebAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<Reservation>> MakeReservationForMultipleDays(CreateReservationForMultipleDaysDto createReservationDto)
+        public async Task<ActionResult<Reservation>> MakeReservationForMultipleDays(CreateReservationForMultipleDaysDto createReservationDto, CancellationToken cancellationToken = default)
         {
             var validation = new ReservationDateValidator();
             var validationResult = validation.Validate(createReservationDto);
             if (validationResult.IsValid)
             {
-                await _reservationRepository.BookDeskForMultipleDays(createReservationDto);
+                await _reservationRepository.BookDeskForMultipleDays(createReservationDto, cancellationToken);
                 return Ok();
             }
             return BadRequest(validationResult.Errors);
@@ -35,17 +35,17 @@ namespace SolutionMind.WebAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<Reservation>> MakeReservationForOneDay(int deskId, string userId, DateTime reservationDay)
+        public async Task<ActionResult<Reservation>> MakeReservationForOneDay(int deskId, string userId, DateTime reservationDay, CancellationToken cancellationToken = default)
         {
-            await _reservationRepository.BookDeskForOneDay(deskId, userId, reservationDay);
+            await _reservationRepository.BookDeskForOneDay(deskId, userId, reservationDay, cancellationToken);
             return Ok();
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task <ActionResult<Reservation>> UpdateDesk(int deskId, string userId, int reservationId)
+        public async Task <ActionResult<Reservation>> UpdateDesk(int deskId, string userId, int reservationId, CancellationToken cancellationToken = default)
         {
-            await _reservationRepository.UpdateDesk(deskId, userId, reservationId);
+            await _reservationRepository.UpdateDesk(deskId, userId, reservationId, cancellationToken);
             return Ok();
         }
 

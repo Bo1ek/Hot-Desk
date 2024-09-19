@@ -8,7 +8,6 @@ namespace SoftwareMind.Infrastructure.Repositories;
 public interface IDeskRepository
 {
     Task CreateAsync(CreateDeskDto createDeskDto, CancellationToken cancellationToken = default);
-    Task UpdateAsync(LocationDto locationDto, CancellationToken cancellationToken = default);
     Task RemoveAsync(int locationId, CancellationToken cancellationToken = default);
     bool IsAvailable(int deskId);
     bool Exists(int deskId);
@@ -47,10 +46,6 @@ public class DeskRepository : IDeskRepository
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public Task UpdateAsync(LocationDto locationDto, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
     public bool IsAvailable(int deskId)
     {
         return _context.Desks.Any(d => d.IsAvailable == true && d.Id == deskId);

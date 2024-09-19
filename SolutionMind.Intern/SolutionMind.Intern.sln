@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolutionMind.WebAPI", "SolutionMind.WebAPI\SolutionMind.WebAPI.csproj", "{458F6976-C368-4B77-BD44-AD86A30C97D3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2B45CED3-19D6-4CBF-AD64-B509FD595764} = {2B45CED3-19D6-4CBF-AD64-B509FD595764}
-		{F98361DE-EA75-4EFF-8C3B-A3D399CBBA89} = {F98361DE-EA75-4EFF-8C3B-A3D399CBBA89}
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftwareMind.Application", "SoftwareMind.Application\SoftwareMind.Application.csproj", "{2B45CED3-19D6-4CBF-AD64-B509FD595764}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C5B62DEE-9EAF-4D8C-BE07-7BBDD25C8EE0} = {C5B62DEE-9EAF-4D8C-BE07-7BBDD25C8EE0}
@@ -22,7 +16,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftwareMind.Infrastructure
 		{C5B62DEE-9EAF-4D8C-BE07-7BBDD25C8EE0} = {C5B62DEE-9EAF-4D8C-BE07-7BBDD25C8EE0}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwareMind.UnitTests", "SoftwareMind.UnitTests\SoftwareMind.UnitTests.csproj", "{128328EE-B9BD-4D6D-99B5-0CF45AFA85F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftwareMind.UnitTests", "SoftwareMind.UnitTests\SoftwareMind.UnitTests.csproj", "{128328EE-B9BD-4D6D-99B5-0CF45AFA85F1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2B45CED3-19D6-4CBF-AD64-B509FD595764} = {2B45CED3-19D6-4CBF-AD64-B509FD595764}
+		{C5B62DEE-9EAF-4D8C-BE07-7BBDD25C8EE0} = {C5B62DEE-9EAF-4D8C-BE07-7BBDD25C8EE0}
+		{F98361DE-EA75-4EFF-8C3B-A3D399CBBA89} = {F98361DE-EA75-4EFF-8C3B-A3D399CBBA89}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftwareMind.WebAPI", "SoftwareMind.WebAPI\SoftwareMind.WebAPI.csproj", "{F7442221-081A-4669-9F8C-D0E49B3BDDF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +31,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{458F6976-C368-4B77-BD44-AD86A30C97D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{458F6976-C368-4B77-BD44-AD86A30C97D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{458F6976-C368-4B77-BD44-AD86A30C97D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{458F6976-C368-4B77-BD44-AD86A30C97D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2B45CED3-19D6-4CBF-AD64-B509FD595764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2B45CED3-19D6-4CBF-AD64-B509FD595764}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B45CED3-19D6-4CBF-AD64-B509FD595764}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -50,6 +47,10 @@ Global
 		{128328EE-B9BD-4D6D-99B5-0CF45AFA85F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{128328EE-B9BD-4D6D-99B5-0CF45AFA85F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{128328EE-B9BD-4D6D-99B5-0CF45AFA85F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7442221-081A-4669-9F8C-D0E49B3BDDF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7442221-081A-4669-9F8C-D0E49B3BDDF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7442221-081A-4669-9F8C-D0E49B3BDDF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7442221-081A-4669-9F8C-D0E49B3BDDF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

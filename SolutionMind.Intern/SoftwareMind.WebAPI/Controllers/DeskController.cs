@@ -3,7 +3,7 @@ using SoftwareMind.Infrastructure.Repositories;
 using SoftwareMind.Application.Common.DTOs;
 using SoftwareMind.Application.Common.Models;
 
-namespace SolutionMind.WebAPI.Controllers;
+namespace SoftwareMind.WebAPI.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]

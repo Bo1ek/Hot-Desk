@@ -6,7 +6,7 @@ using SoftwareMind.Application.Common.Models;
 using SoftwareMind.Application.Common.Validator;
 using SoftwareMind.Infrastructure.Repositories;
 
-namespace SolutionMind.WebAPI.Controllers
+namespace SoftwareMind.WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

@@ -87,9 +87,9 @@ public class ReservationRepository : IReservationRepository
     {
         return _context.Reservations.Any(r => r.UserId == userId && r.Id == reservationId);
     }
-    public async Task<Reservation> GetReservationById(int reservationId)
+    public async Task<Reservation> GetReservationById(int reservationId, CancellationToken cancellationToken = default)
     {
-        return await _context.Reservations.FindAsync(reservationId);
+        return await _context.Reservations.FindAsync(reservationId, cancellationToken);
     }
 
     public async Task<Reservation> UpdateDesk(int deskId, string userId, int reservationId, CancellationToken cancellationToken = default)
