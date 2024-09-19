@@ -1,4 +1,4 @@
-﻿namespace SoftwareMind.Infrastructure.Helpers;
+﻿namespace SoftwareMind.Application.Helpers;
 
 public static class DateTimeHelper
 {
