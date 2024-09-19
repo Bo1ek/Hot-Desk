@@ -1,4 +1,4 @@
-﻿namespace SoftwareMind.Infrastructure.Entities;
+﻿namespace SoftwareMind.Application.Entities;
 
 public class Location
 {
