@@ -1,4 +1,4 @@
-﻿namespace SoftwareMind.Infrastructure.DTOs;
+﻿namespace SoftwareMind.Application.DTOs;
 
 public class CreateReservationForMultipleDaysDto
 {
