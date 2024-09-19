@@ -28,11 +28,10 @@ public class DeskController : Controller
     ///     {
     ///         "locationId": 1
     ///     }
-    ///         
     /// 
     /// </remarks>
     /// <response code ="200">Returns the 200 Response. </response>
-    /// <response code ="404">Returns not found status due to lack of Location to assign. </response>
+    /// <response code ="404">Returns not found response. </response>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -53,11 +52,11 @@ public class DeskController : Controller
     /// <remarks>
     /// Sample request: 
     /// 
-    ///     Delete/api/desk/{deskId}
+    ///     Delete/api/desk/RemoveDesk/{deskId}
     /// 
     /// </remarks>
-    /// <response code ="204">Returns204 response.  </response>
-    /// <response code ="404">Returns BadRequest response. " </response>
+    /// <response code ="204">Returns that request has succeeded.  </response>
+    /// <response code ="400">Returns BadRequest response. " </response>
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -78,18 +77,18 @@ public class DeskController : Controller
     /// <remarks>
     /// Sample request: 
     /// 
-    ///     Put/api/Desk/MakeUnavailable
+    ///     Put/api/Desk/MakeUnavailable/{deskId}
     ///     {
     ///         "id" : 1,
     ///     }
     ///         
     /// 
     /// </remarks>
-    /// <response code ="200">Returns the 200 Response. </response>
-    /// <response code ="400">Returns errror message from Validator. </response>
+    /// <response code ="200">Returns the OK Response. </response>
+    /// <response code ="500">Returns errror message from Validator. </response>
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<Desk>> MakeUnavailable(int deskId, CancellationToken cancellationToken = default)
     {
         await _deskRepository.MakeUnavailable(deskId);
@@ -100,7 +99,7 @@ public class DeskController : Controller
     ///  Gets all available desks
     /// </summary>
     /// <returns></returns>
-    /// <response code = "200"> Returns list of Desks </response>
+    /// <response code = "200"> Returns list of available desks </response>
     [HttpGet]
     public async Task<ActionResult<List<Desk>>> GetAllAvailableDesks()
     {
@@ -110,12 +109,17 @@ public class DeskController : Controller
     ///  Gets all unavailable desks
     /// </summary>
     /// <returns></returns>
-    /// <response code = "200"> Returns list of Desks </response>
+    /// <response code = "200"> Returns list of unavailable desks </response>
     [HttpGet]
     public async Task<ActionResult<List<Desk>>> GetAllUnavailableDesks()
     {
         return await _deskRepository.getAllUnavailableDesks();
     }
+    /// <summary>
+    ///  Gets all desks in location
+    /// </summary>
+    /// <returns></returns>
+    /// <response code = "200"> Returns list of desks in location </response>
     [HttpGet]
     public async Task<ActionResult<List<Desk>>> GetDesksByLocation(int locationId)
     {

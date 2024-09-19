@@ -25,17 +25,16 @@ namespace SoftwareMind.WebAPI.Controllers
         /// <remarks>
         /// Sample request: 
         /// 
-        ///     Post/api/location
+        ///     Post/api/location/CreateLocation
         ///     {
         ///         "city": "Katowice"
         ///     }
         ///         
         /// 
         /// </remarks>
-        /// <response code ="201">Returns the newly created Location. </response>
+        /// <response code ="200"> Returns the newly created Location with the OK response. </response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Location>> CreateLocation(CreateLocationDto createLocationDto)
         {
             var validator = new CreateLocationValidator();
@@ -55,7 +54,7 @@ namespace SoftwareMind.WebAPI.Controllers
         /// <remarks>
         /// Sample request: 
         /// 
-        ///     Put/api/location
+        ///     Put/api/location/UpdateLocation
         ///     {
         ///         "id" : 1,
         ///         "city": "Warszawa"
@@ -63,11 +62,11 @@ namespace SoftwareMind.WebAPI.Controllers
         ///         
         /// 
         /// </remarks>
-        /// <response code ="201">Returns the updated Location with it's Id. </response>
-        /// <response code ="400">Returns errror message from Validator. </response>
+        /// <response code ="200">Returns the updated Location with it's Id. </response>
+        /// <response code ="500">Returns error message from Validator. </response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<LocationDto>> UpdateLocation(LocationDto locationDto)
         {
             var validator = new UpdateLocationValidator();
@@ -87,11 +86,11 @@ namespace SoftwareMind.WebAPI.Controllers
         /// <remarks>
         /// Sample request: 
         /// 
-        ///     Delete/api/location/{locationId}
+        ///     Delete/api/location/RemoveLocation/{locationId}
         /// 
         /// </remarks>
-        /// <response code ="204">Returns No Content message.  </response>
-        /// <response code ="404">Returns message "Location with id {id} not found." </response>
+        /// <response code ="204">Returns No Content response.  </response>
+        /// <response code ="404">Returns message "Location with id not found." </response>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
