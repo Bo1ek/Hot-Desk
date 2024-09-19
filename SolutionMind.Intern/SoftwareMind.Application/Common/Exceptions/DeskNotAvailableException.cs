@@ -1,4 +1,4 @@
-﻿namespace SoftwareMind.Infrastructure.Exceptions;
+﻿namespace SoftwareMind.Application.Exceptions;
 
 public class DeskNotAvailableException : Exception
 {

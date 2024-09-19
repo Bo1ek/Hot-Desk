@@ -50,7 +50,7 @@ namespace SolutionMind.WebAPI.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<Reservation>>> GetListOfReservations()

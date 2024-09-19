@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using SoftwareMind.Application.Exceptions;
 using SoftwareMind.Infrastructure.DTOs;
 using SoftwareMind.Infrastructure.Entities;
-using SoftwareMind.Infrastructure.Exceptions;
 using SoftwareMind.Infrastructure.Repositories;
 using SoftwareMind.Infrastructure.Validator;
 
