@@ -1,4 +1,4 @@
-﻿namespace SoftwareMind.Application.Common.Exceptions;
+﻿namespace SoftwareMind.Application.Exceptions;
 
 public class DeskAlreadyReservedException : Exception
 {

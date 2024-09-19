@@ -1,7 +1,7 @@
-﻿using SoftwareMind.Application.Common.DTOs;
-using SoftwareMind.Application.Common.Exceptions;
-using SoftwareMind.Application.Common.Models;
+﻿using SoftwareMind.Application.Exceptions;
 using SoftwareMind.Infrastructure.Data;
+using SoftwareMind.Infrastructure.DTOs;
+using SoftwareMind.Infrastructure.Entities;
 
 namespace SoftwareMind.Infrastructure.Repositories;
 public interface ILocationRepository

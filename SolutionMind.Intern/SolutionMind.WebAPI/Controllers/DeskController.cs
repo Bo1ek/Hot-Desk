@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SoftwareMind.Application.Common.DTOs;
-using SoftwareMind.Application.Common.Models;
 using SoftwareMind.Infrastructure.Repositories;
+using SoftwareMind.Infrastructure.DTOs;
+using SoftwareMind.Infrastructure.Entities;
 
 namespace SolutionMind.WebAPI.Controllers;
 

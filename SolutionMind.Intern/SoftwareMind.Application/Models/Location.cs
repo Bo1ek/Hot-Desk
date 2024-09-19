@@ -1,4 +1,4 @@
-﻿namespace SoftwareMind.Application.Common.Models;
+﻿namespace SoftwareMind.Application.Entities;
 
 public class Location
 {

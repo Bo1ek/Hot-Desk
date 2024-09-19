@@ -1,4 +1,4 @@
-﻿namespace SoftwareMind.Application.Common.Enums;
+﻿namespace SoftwareMind.Infrastructure.Enums;
 
 public enum Roles
 {

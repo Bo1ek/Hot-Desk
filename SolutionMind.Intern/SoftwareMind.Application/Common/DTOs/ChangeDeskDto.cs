@@ -1,4 +1,4 @@
-﻿namespace SoftwareMind.Application.Common.DTOs;
+﻿namespace SoftwareMind.Application.DTOs;
 
 public class ChangeDeskDto
 {

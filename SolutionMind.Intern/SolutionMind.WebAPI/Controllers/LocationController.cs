@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Serilog;
-using SoftwareMind.Application.Common.DTOs;
-using SoftwareMind.Application.Common.Exceptions;
-using SoftwareMind.Application.Common.Models;
-using SoftwareMind.Application.Common.Validator;
+using SoftwareMind.Application.Exceptions;
+using SoftwareMind.Infrastructure.DTOs;
+using SoftwareMind.Infrastructure.Entities;
 using SoftwareMind.Infrastructure.Repositories;
+using SoftwareMind.Infrastructure.Validator;
 
 namespace SolutionMind.WebAPI.Controllers
 {
