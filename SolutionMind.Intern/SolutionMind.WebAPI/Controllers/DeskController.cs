@@ -24,18 +24,17 @@ public class DeskController : Controller
     /// <remarks>
     /// Sample request: 
     /// 
-    ///     Post/api/Desk
+    ///     Post/api/Desk/CreateDesk
     ///     {
     ///         "locationId": 1
     ///     }
     ///         
     /// 
     /// </remarks>
-    /// <response code ="201">Returns the newly created Desk. </response>
+    /// <response code ="200">Returns the 200 Response. </response>
     /// <response code ="404">Returns not found status due to lack of Location to assign. </response>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CreateDeskDto>> CreateDesk(CreateDeskDto createDeskDto)
     {
@@ -57,7 +56,7 @@ public class DeskController : Controller
     ///     Delete/api/desk/{deskId}
     /// 
     /// </remarks>
-    /// <response code ="204">Returns No Content message.  </response>
+    /// <response code ="204">Returns204 response.  </response>
     /// <response code ="404">Returns BadRequest response. " </response>
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -79,15 +78,14 @@ public class DeskController : Controller
     /// <remarks>
     /// Sample request: 
     /// 
-    ///     Put/api/location
+    ///     Put/api/Desk/MakeUnavailable
     ///     {
     ///         "id" : 1,
-    ///         "city": "Warszawa"
     ///     }
     ///         
     /// 
     /// </remarks>
-    /// <response code ="201">Returns the updated Location with it's Id. </response>
+    /// <response code ="200">Returns the 200 Response. </response>
     /// <response code ="400">Returns errror message from Validator. </response>
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -98,11 +96,21 @@ public class DeskController : Controller
         return Ok();
     }
 
+    /// <summary>
+    ///  Gets all available desks
+    /// </summary>
+    /// <returns></returns>
+    /// <response code = "200"> Returns list of Desks </response>
     [HttpGet]
     public async Task<ActionResult<List<Desk>>> GetAllAvailableDesks()
     {
         return await _deskRepository.getAllAvailableDesks();
     }
+    /// <summary>
+    ///  Gets all unavailable desks
+    /// </summary>
+    /// <returns></returns>
+    /// <response code = "200"> Returns list of Desks </response>
     [HttpGet]
     public async Task<ActionResult<List<Desk>>> GetAllUnavailableDesks()
     {

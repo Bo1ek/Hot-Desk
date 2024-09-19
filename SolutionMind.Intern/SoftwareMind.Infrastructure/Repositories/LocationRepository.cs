@@ -31,9 +31,9 @@ public class LocationRepository : ILocationRepository
     public async Task UpdateAsync(LocationDto locationDto, CancellationToken cancellationToken = default)
     {
         var location = await _context.Locations.FindAsync(locationDto.Id, cancellationToken);
-        if (location == null)
+        if (!Exists(locationDto.Id))
         {
-            throw new Exception("Location not found"); // Add new Exception
+            throw new LocationNotFoundException(locationDto.Id);
         }
         location.City = locationDto.City;
         await _context.SaveChangesAsync(cancellationToken);

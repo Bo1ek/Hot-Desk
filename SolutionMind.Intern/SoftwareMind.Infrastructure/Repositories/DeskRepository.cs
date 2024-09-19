@@ -62,7 +62,7 @@ public class DeskRepository : IDeskRepository
     public async Task<Desk> MakeUnavailable(int deskId, CancellationToken cancellationToken = default)
     {
         var desk = await _context.Desks.FindAsync(deskId, cancellationToken);
-        if (desk == null)
+        if (!Exists(deskId))
         {
             throw new DeskNotFoundException(deskId);
         }

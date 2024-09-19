@@ -1,6 +1,7 @@
 ﻿using SoftwareMind.Infrastructure.Data;
 using SoftwareMind.Infrastructure.DTOs;
 using SoftwareMind.Infrastructure.Entities;
+using SoftwareMind.Infrastructure.Exceptions;
 using SoftwareMind.Infrastructure.Helpers;
 
 namespace SoftwareMind.Infrastructure.Repositories;
@@ -38,7 +39,14 @@ public class ReservationRepository : IReservationRepository
             await _context.Reservations.AddAsync(reservation, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
         }
-        else throw new Exception("Desk is reserved or does not exist"); // Add new Exception
+        else if (!_deskRepository.Exists(createReservationDto.DeskId))
+        {
+            throw new DeskNotFoundException(createReservationDto.DeskId);
+        }
+        else if (IsReserved(createReservationDto.DeskId, createReservationDto.StartDate, createReservationDto.EndDate))
+        {
+            throw new DeskNotAvailableException(createReservationDto.DeskId);
+        }
     }
     public async Task BookDeskForOneDay(int deskId, string userId, DateTime reservationDay, CancellationToken cancellationToken = default)
     {
@@ -54,7 +62,14 @@ public class ReservationRepository : IReservationRepository
             await _context.Reservations.AddAsync(reservation, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
         }
-        else throw new Exception("Desk is reserved or does not exist"); // Add new Exception
+        else if (!_deskRepository.Exists(deskId))
+        {
+            throw new DeskNotFoundException(deskId);
+        }
+        else if (IsReserved(deskId, reservationDay, reservationDay))
+        {
+            throw new DeskNotAvailableException(deskId);
+        }
     }
     public bool IsReserved(int deskId, DateTime startDate, DateTime endDate)
     {
@@ -77,7 +92,7 @@ public class ReservationRepository : IReservationRepository
         return await _context.Reservations.FindAsync(reservationId);
     }
 
-    public async Task<Reservation> UpdateDesk(int deskId,string userId, int reservationId, CancellationToken cancellationToken = default)
+    public async Task<Reservation> UpdateDesk(int deskId, string userId, int reservationId, CancellationToken cancellationToken = default)
     {
         if (_deskRepository.Exists(deskId) && IsReservedByUser(userId, reservationId))
         {
@@ -87,10 +102,10 @@ public class ReservationRepository : IReservationRepository
                 reservation.DeskId = deskId;
                 await _context.SaveChangesAsync(cancellationToken);
                 return reservation;
-            } 
-            throw new Exception("You cannot update a reservation that is less than 24 hours away"); // Add new Exception
+            }
+            throw new ReservationIsTooSoonToUpdateDeskException(reservationId);
         }
-        throw new Exception("Desk is reserved or does not exist");  // Add new Exception
+        throw new DeskNotAvailableException(deskId);
     }
 
     public async Task<List<Reservation>> GetListOfReservations()
