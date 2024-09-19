@@ -1,5 +1,4 @@
-﻿namespace SoftwareMind.Application.Exceptions;
-
+﻿namespace SoftwareMind.Application.Common.Exceptions;
 public class DeskAlreadyReservedException : Exception
 {
     public DeskAlreadyReservedException(int deskId) : base($"Desk with id {deskId} not found")

@@ -1,5 +1,4 @@
-﻿namespace SoftwareMind.Application.Helpers;
-
+﻿namespace SoftwareMind.Application.Common.Helpers;
 public static class DateTimeHelper
 {
     public static DateTime SetTimeToStartOfDay(this DateTime dateTime)

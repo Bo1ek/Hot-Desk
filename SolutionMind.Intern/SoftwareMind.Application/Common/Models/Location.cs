@@ -1,5 +1,4 @@
-﻿namespace SoftwareMind.Application.Entities;
-
+﻿namespace SoftwareMind.Application.Common.Models;
 public class Location
 {
     public int Id { get; set; }

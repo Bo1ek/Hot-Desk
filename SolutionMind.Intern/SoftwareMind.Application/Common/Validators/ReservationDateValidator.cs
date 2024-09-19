@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
-using SoftwareMind.Infrastructure.DTOs;
-using SoftwareMind.Application.Helpers;
+using SoftwareMind.Application.Common.DTOs;
+using SoftwareMind.Application.Common.Helpers;
 
-namespace SoftwareMind.Application.Validator;
-
+namespace SoftwareMind.Application.Common.Validator;
 public class ReservationDateValidator : AbstractValidator<CreateReservationForMultipleDaysDto> 
 {
     public ReservationDateValidator()

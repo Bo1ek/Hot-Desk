@@ -1,4 +1,4 @@
-﻿namespace SoftwareMind.Application.Exceptions;
+﻿namespace SoftwareMind.Application.Common.Exceptions;
 public class ReservationIsTooSoonToUpdateDeskException : Exception
 {
     public ReservationIsTooSoonToUpdateDeskException(int reservationId) : base($"You cannot update a reservation" +

@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoftwareMind.Infrastructure
 		{C5B62DEE-9EAF-4D8C-BE07-7BBDD25C8EE0} = {C5B62DEE-9EAF-4D8C-BE07-7BBDD25C8EE0}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwareMind.UnitTests", "SoftwareMind.UnitTests\SoftwareMind.UnitTests.csproj", "{128328EE-B9BD-4D6D-99B5-0CF45AFA85F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{F98361DE-EA75-4EFF-8C3B-A3D399CBBA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F98361DE-EA75-4EFF-8C3B-A3D399CBBA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F98361DE-EA75-4EFF-8C3B-A3D399CBBA89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{128328EE-B9BD-4D6D-99B5-0CF45AFA85F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{128328EE-B9BD-4D6D-99B5-0CF45AFA85F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{128328EE-B9BD-4D6D-99B5-0CF45AFA85F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{128328EE-B9BD-4D6D-99B5-0CF45AFA85F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

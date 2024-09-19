@@ -1,5 +1,4 @@
-﻿namespace SoftwareMind.Application.Exceptions;
-
+﻿namespace SoftwareMind.Application.Common.Exceptions;
 public class DeskNotAvailableException : Exception
 {
     public DeskNotAvailableException(int deskId) : base($"Desk with id {deskId} is not available." +

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using SoftwareMind.Application.Common.Models;
 using SoftwareMind.Infrastructure.Data;
-using SoftwareMind.Infrastructure.Entities;
 using SoftwareMind.Infrastructure.Repositories;
 using System.Reflection;
 

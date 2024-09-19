@@ -1,5 +1,4 @@
-﻿namespace SoftwareMind.Infrastructure.Enums;
-
+﻿namespace SoftwareMind.Infrastructure.Common.Enums;
 public enum Roles
 {
     SuperAdmin,
