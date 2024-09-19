@@ -1,10 +1,9 @@
 ﻿using FluentValidation;
-using SoftwareMind.Infrastructure.DTOs;
-namespace SoftwareMind.Infrastructure.Validator;
+namespace SoftwareMind.Application.Validator;
 
-public class UpdateLocationValidator : AbstractValidator<LocationDto>
+public class CreateLocationValidator : AbstractValidator<CreateLocationDto>
 {
-    public UpdateLocationValidator()
+    public CreateLocationValidator()
     {
         RuleFor(x => x.City)
             .NotEmpty()
