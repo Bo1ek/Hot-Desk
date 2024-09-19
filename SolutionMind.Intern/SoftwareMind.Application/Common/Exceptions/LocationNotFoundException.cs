@@ -1,4 +1,4 @@
-﻿namespace SoftwareMind.Application.Exceptions;
+﻿namespace SoftwareMind.Application.Common.Exceptions;
 
 public class LocationNotFoundException : Exception
 {

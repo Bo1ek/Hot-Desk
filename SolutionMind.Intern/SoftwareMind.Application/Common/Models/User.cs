@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SoftwareMind.Application.Entities;
+namespace SoftwareMind.Application.Common.Models;
 
 public class User : IdentityUser
 {

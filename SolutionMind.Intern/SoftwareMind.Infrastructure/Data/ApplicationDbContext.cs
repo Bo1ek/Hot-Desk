@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SoftwareMind.Infrastructure.Entities;
+using SoftwareMind.Application.Common.Models;
 
 namespace SoftwareMind.Infrastructure.Data;
 

@@ -1,8 +1,9 @@
-﻿using SoftwareMind.Application.Exceptions;
+﻿using SoftwareMind.Application.Common.DTOs;
+using SoftwareMind.Application.Common.Exceptions;
+using SoftwareMind.Application.Common.Helpers;
+using SoftwareMind.Application.Common.Models;
 using SoftwareMind.Infrastructure.Data;
-using SoftwareMind.Infrastructure.DTOs;
-using SoftwareMind.Infrastructure.Entities;
-using SoftwareMind.Infrastructure.Helpers;
+
 
 namespace SoftwareMind.Infrastructure.Repositories;
 public interface IReservationRepository

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SoftwareMind.Infrastructure.DTOs;
-using SoftwareMind.Infrastructure.Entities;
+using SoftwareMind.Application.Common.DTOs;
+using SoftwareMind.Application.Common.Models;
+using SoftwareMind.Application.Common.Validator;
 using SoftwareMind.Infrastructure.Repositories;
-using SoftwareMind.Infrastructure.Validator;
 
 namespace SolutionMind.WebAPI.Controllers
 {

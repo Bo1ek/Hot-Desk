@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using SoftwareMind.Infrastructure.DTOs;
-namespace SoftwareMind.Application.Validator;
+using SoftwareMind.Application.Common.DTOs;
+namespace SoftwareMind.Application.Common.Validator;
 
 public class UpdateLocationValidator : AbstractValidator<LocationDto>
 {
