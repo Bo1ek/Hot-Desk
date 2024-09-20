@@ -2,8 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SoftwareMind.Application.Common.Models;
 using SoftwareMind.Infrastructure.Data;
-using SoftwareMind.Infrastructure.Repositories;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using SoftwareMind.WebAPI.Services;
+using SoftwareMind.WebAPI.Startup;
+using SoftwareMind.WebAPI.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,13 +30,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SoftwareMind"));
 });
-builder.Services.AddAuthorizationBuilder();
+builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
 builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
-builder.Services.AddScoped<ILocationRepository, LocationRepository>();
-builder.Services.AddScoped<IDeskRepository, DeskRepository>();
+builder.Services.AddRepositories();
+builder.Services.FluentEmailInjection(builder.Configuration);
+builder.Services.AddSingleton<IEmailService, EmailService>();
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
+
+builder.Services.ConfigureApplicationCookie(options => { options.Cookie.SameSite = SameSiteMode.None; });
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
@@ -41,6 +47,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapIdentityApi<User>();

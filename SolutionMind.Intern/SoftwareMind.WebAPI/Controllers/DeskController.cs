@@ -37,12 +37,11 @@ public class DeskController : Controller
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CreateDeskDto>> CreateDesk(CreateDeskDto createDeskDto)
     {
-        if (_locationRepository.Exists(createDeskDto.LocationId))
-        {
-            await _deskRepository.CreateAsync(createDeskDto);
-            return Ok(createDeskDto);
-        }
-        return NotFound();
+        if (!_locationRepository.Exists(createDeskDto.LocationId))
+            return NotFound();
+
+        await _deskRepository.CreateAsync(createDeskDto);
+        return Ok(createDeskDto);
     }
 
     /// <summary>
@@ -62,12 +61,11 @@ public class DeskController : Controller
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> RemoveDesk(int deskId)
     {
-        if (_deskRepository.IsAvailable(deskId) && _deskRepository.Exists(deskId))
-        {
-            await _deskRepository.RemoveAsync(deskId);
-            return NoContent();
-        }
-        return BadRequest();
+        if (!_deskRepository.IsAvailable(deskId) || !_deskRepository.Exists(deskId))
+            return BadRequest();
+
+        await _deskRepository.RemoveAsync(deskId);
+        return NoContent();
     }
 
     /// <summary>

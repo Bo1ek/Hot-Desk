@@ -39,12 +39,12 @@ namespace SoftwareMind.WebAPI.Controllers
         {
             var validator = new CreateLocationValidator();
             var validationResult = validator.Validate(createLocationDto);
-            if (validationResult.IsValid)
-            {
-                await _locationRepository.CreateAsync(createLocationDto);
-                return Ok(createLocationDto);
-            }
-            return BadRequest(validationResult.Errors);
+
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors);
+
+            await _locationRepository.CreateAsync(createLocationDto);
+            return Ok(createLocationDto);
         }
 
         /// <summary>
@@ -71,10 +71,12 @@ namespace SoftwareMind.WebAPI.Controllers
         {
             var validator = new UpdateLocationValidator();
             var validationResult = validator.Validate(locationDto);
+
             if (!validationResult.IsValid)
             {
                 return BadRequest(validationResult.Errors);
             }
+
             await _locationRepository.UpdateAsync(locationDto);
             return Ok(locationDto);
         }

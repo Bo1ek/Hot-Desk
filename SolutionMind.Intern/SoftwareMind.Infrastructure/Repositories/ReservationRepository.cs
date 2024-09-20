@@ -36,18 +36,22 @@ public class ReservationRepository : IReservationRepository
                 StartDate = DateTimeHelper.SetTimeToStartOfDay(createReservationDto.StartDate),
                 EndDate = DateTimeHelper.SetTimeToEndOfDay(createReservationDto.EndDate),
             };
+
             await _context.Reservations.AddAsync(reservation, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
         }
+
         else if (!_deskRepository.Exists(createReservationDto.DeskId))
         {
             throw new DeskNotFoundException(createReservationDto.DeskId);
         }
+
         else if (IsReserved(createReservationDto.DeskId, createReservationDto.StartDate, createReservationDto.EndDate))
         {
             throw new DeskNotAvailableException(createReservationDto.DeskId);
         }
     }
+
     public async Task BookDeskForOneDay(int deskId, string userId, DateTime reservationDay, CancellationToken cancellationToken = default)
     {
         if (_deskRepository.Exists(deskId) && !IsReserved(deskId, reservationDay, reservationDay))
@@ -59,18 +63,22 @@ public class ReservationRepository : IReservationRepository
                 StartDate = DateTimeHelper.SetTimeToStartOfDay(reservationDay),
                 EndDate = DateTimeHelper.SetTimeToEndOfDay(reservationDay),
             };
+
             await _context.Reservations.AddAsync(reservation, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
         }
+
         else if (!_deskRepository.Exists(deskId))
         {
             throw new DeskNotFoundException(deskId);
         }
+
         else if (IsReserved(deskId, reservationDay, reservationDay))
         {
             throw new DeskNotAvailableException(deskId);
         }
     }
+
     public bool IsReserved(int deskId, DateTime startDate, DateTime endDate)
     {
         return _context.Reservations.Any(s =>
@@ -79,14 +87,17 @@ public class ReservationRepository : IReservationRepository
              (s.StartDate <= endDate && s.EndDate >= endDate) ||
              (s.StartDate >= startDate && s.EndDate <= endDate)));
     }
+
     public bool Exists(int reservationId)
     {
         return _context.Reservations.Any(r => r.Id == reservationId);
     }
+
     public bool IsReservedByUser(string userId, int reservationId)
     {
         return _context.Reservations.Any(r => r.UserId == userId && r.Id == reservationId);
     }
+
     public async Task<Reservation> GetReservationById(int reservationId, CancellationToken cancellationToken = default)
     {
         return await _context.Reservations.FindAsync(reservationId, cancellationToken);
@@ -97,12 +108,14 @@ public class ReservationRepository : IReservationRepository
         if (_deskRepository.Exists(deskId) && IsReservedByUser(userId, reservationId))
         {
             var reservation = await GetReservationById(reservationId);
+            
             if (reservation.StartDate > DateTime.UtcNow.AddHours(24))
             {
                 reservation.DeskId = deskId;
                 await _context.SaveChangesAsync(cancellationToken);
                 return reservation;
             }
+
             throw new ReservationIsTooSoonToUpdateDeskException(reservationId);
         }
         throw new DeskNotAvailableException(deskId);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SoftwareMind.Application.Common.DTOs;
 using SoftwareMind.Application.Common.Models;
 using SoftwareMind.Application.Common.Validator;
@@ -38,12 +39,14 @@ namespace SoftwareMind.WebAPI.Controllers
         public async Task<ActionResult<Reservation>> MakeReservationForMultipleDays(CreateReservationForMultipleDaysDto createReservationDto, CancellationToken cancellationToken = default)
         {
             var validation = new ReservationDateValidator();
+            
             var validationResult = validation.Validate(createReservationDto);
             if (validationResult.IsValid)
             {
                 await _reservationRepository.BookDeskForMultipleDays(createReservationDto, cancellationToken);
                 return Ok();
             }
+
             return BadRequest(validationResult.Errors);
 
         }
@@ -96,7 +99,7 @@ namespace SoftwareMind.WebAPI.Controllers
         /// <remarks>
         /// </remarks>
         /// <response code ="200">Gets a list of all reservations. </response>
-        // [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<Reservation>>> GetListOfReservations()

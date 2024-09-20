@@ -17,6 +17,7 @@ public interface IDeskRepository
     Task<List<Desk>> getDesksByLocation(int locationId);
 
 }
+
 public class DeskRepository : IDeskRepository
 {
     private readonly ApplicationDbContext _context;
@@ -38,10 +39,12 @@ public class DeskRepository : IDeskRepository
     public async Task RemoveAsync(int deskId, CancellationToken cancellationToken = default)
     {
         var deskToRemove = await _context.Desks.FindAsync(deskId);
+
         if (deskToRemove == null)
         {
             throw new DeskNotFoundException(deskId);
         }
+
         _context.Remove(deskToRemove);
         await _context.SaveChangesAsync(cancellationToken);
     }
@@ -50,10 +53,12 @@ public class DeskRepository : IDeskRepository
     {
         return _context.Desks.Any(d => d.IsAvailable == true && d.Id == deskId);
     }
+
     public bool Exists(int deskId)
     {
         return _context.Desks.Any(d => d.Id == deskId);
     }
+
     public async Task<Desk> MakeUnavailable(int deskId, CancellationToken cancellationToken = default)
     {
         var desk = await _context.Desks.FindAsync(deskId, cancellationToken);
@@ -69,14 +74,17 @@ public class DeskRepository : IDeskRepository
         await _context.SaveChangesAsync(cancellationToken);
         return desk;
     }
+
     public async Task<List<Desk>> getAllAvailableDesks()
     {
         return _context.Desks.Where(d => d.IsAvailable == true).ToList();
     }
+
     public async Task<List<Desk>> getAllUnavailableDesks()
     {
         return _context.Desks.Where(d => d.IsAvailable == false).ToList();
     }
+
     public async Task<List<Desk>> getDesksByLocation(int locationId)
     {
         return _context.Desks.Where(d => d.Location.Id == locationId ).ToList();

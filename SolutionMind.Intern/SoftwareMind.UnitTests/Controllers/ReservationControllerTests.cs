@@ -11,8 +11,10 @@ namespace SoftwareMind.UnitTests.WebAPI.Controllers;
 public class ReservationControllerTests
 {
     private readonly Mock<IReservationRepository> _mockReservationRepository;
+
     private readonly ReservationController _controller;
     private readonly CancellationToken cancellationToken = new CancellationTokenSource().Token;
+
     public ReservationControllerTests()
     {
         _mockReservationRepository = new Mock<IReservationRepository>();
@@ -33,7 +35,6 @@ public class ReservationControllerTests
 
         var validation = new ReservationDateValidator();
         var validationResult = validation.Validate(createReservationDto);
-        Assert.True(validationResult.IsValid);
 
         _mockReservationRepository
             .Setup(repo => repo.BookDeskForMultipleDays(It.IsAny<CreateReservationForMultipleDaysDto>(), It.IsAny<CancellationToken>()))
@@ -43,6 +44,7 @@ public class ReservationControllerTests
         var result = await _controller.MakeReservationForMultipleDays(createReservationDto);
 
         // Assert
+        Assert.True(validationResult.IsValid);
         var okResult = Assert.IsType<OkResult>(result.Result);
         Assert.Equal(200, okResult.StatusCode);
         _mockReservationRepository.Verify(repo => repo.BookDeskForMultipleDays(createReservationDto, It.IsAny<CancellationToken>()), Times.Once);
@@ -57,17 +59,17 @@ public class ReservationControllerTests
             DeskId = 1,
             UserId = "1",
             StartDate = DateTime.Now,
-            EndDate = DateTime.Now.AddDays(-1) 
+            EndDate = DateTime.Now.AddDays(-1)
         };
 
         var validation = new ReservationDateValidator();
         var validationResult = validation.Validate(createReservationDto);
-        Assert.False(validationResult.IsValid);
 
         // Act
         var result = await _controller.MakeReservationForMultipleDays(createReservationDto);
 
         // Assert
+        Assert.False(validationResult.IsValid);
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
         Assert.Equal(400, badRequestResult.StatusCode);
         _mockReservationRepository.Verify(repo => repo.BookDeskForMultipleDays(It.IsAny<CreateReservationForMultipleDaysDto>(), cancellationToken), Times.Never);
@@ -121,8 +123,8 @@ public class ReservationControllerTests
         // Arrange
         var reservations = new List<Reservation>
         {
-            new Reservation { Id = 1, DeskId = 1, UserId = "1", StartDate = DateTime.Now },
-            new Reservation { Id = 2, DeskId = 2, UserId = "2", StartDate = DateTime.Now }
+            new() { Id = 1, DeskId = 1, UserId = "1", StartDate = DateTime.Now },
+            new() { Id = 2, DeskId = 2, UserId = "2", StartDate = DateTime.Now }
         };
 
         _mockReservationRepository
