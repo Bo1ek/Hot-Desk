@@ -2,6 +2,7 @@
 using SoftwareMind.Infrastructure.Repositories;
 using SoftwareMind.Application.Common.DTOs;
 using SoftwareMind.Application.Common.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SoftwareMind.WebAPI.Controllers;
 
@@ -32,6 +33,7 @@ public class DeskController : Controller
     /// </remarks>
     /// <response code ="200">Returns the 200 Response. </response>
     /// <response code ="404">Returns not found response. </response>
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -56,6 +58,7 @@ public class DeskController : Controller
     /// </remarks>
     /// <response code ="204">Returns that request has succeeded.  </response>
     /// <response code ="400">Returns BadRequest response. " </response>
+    [Authorize(Roles = "Admin")]
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -84,6 +87,7 @@ public class DeskController : Controller
     /// </remarks>
     /// <response code ="200">Returns the OK Response. </response>
     /// <response code ="500">Returns errror message from Validator. </response>
+    [Authorize(Roles = "Admin")]
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

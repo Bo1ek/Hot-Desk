@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using SoftwareMind.WebAPI.Services;
 using SoftwareMind.WebAPI.Startup;
 using SoftwareMind.WebAPI.Extensions;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,16 +33,29 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SoftwareMind"));
 });
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+        policy.RequireRole("Admin"));
+});
+
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
 builder.Services.AddIdentityApiEndpoints<User>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRepositories();
 builder.Services.FluentEmailInjection(builder.Configuration);
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
-builder.Services.ConfigureApplicationCookie(options => { options.Cookie.SameSite = SameSiteMode.None; });
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.None; // Allows cross-site cookies
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Ensure HTTPS
+});
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using SoftwareMind.Application.Common.DTOs;
 using SoftwareMind.Application.Common.Exceptions;
@@ -33,6 +34,7 @@ namespace SoftwareMind.WebAPI.Controllers
         /// 
         /// </remarks>
         /// <response code ="200"> Returns the newly created Location with the OK response. </response>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<Location>> CreateLocation(CreateLocationDto createLocationDto)
@@ -64,6 +66,7 @@ namespace SoftwareMind.WebAPI.Controllers
         /// </remarks>
         /// <response code ="200">Returns the updated Location with it's Id. </response>
         /// <response code ="500">Returns error message from Validator. </response>
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -93,6 +96,7 @@ namespace SoftwareMind.WebAPI.Controllers
         /// </remarks>
         /// <response code ="204">Returns No Content response.  </response>
         /// <response code ="404">Returns message "Location with id not found." </response>
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
